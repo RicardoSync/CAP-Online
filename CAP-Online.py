@@ -4,6 +4,8 @@ from customtkinter import CTkFrame, CTkEntry, CTkButton, CTkLabel
 from doblenet import login
 from tkinter import messagebox
 
+from md_panel import md_panel_ui
+
 #funcion de inicio de sesion
 def get_datos():
     if len(nombreent.get()) > 0:
@@ -13,7 +15,7 @@ def get_datos():
         db_name = login(username, password)
 
         if db_name:
-            messagebox.showinfo("CAP-Online", "Existo de sesion")
+            md_panel_ui(loginWindows, username, db_name)
         else:
             messagebox.showerror("CAP-Online", "Usuario o clave incorrectos")
     else:
