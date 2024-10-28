@@ -1,8 +1,10 @@
-from customtkinter import CTkButton, CTkEntry, CTkLabel, CTkFrame, CTk
+from customtkinter import CTkButton, CTkLabel, CTkFrame, CTk
 import customtkinter
-from recursos import colores_ui, imagenes, fuentes
+from recursos import colores_ui, imagenes
 
 from md_paquetes import md_paquetes_ui
+from md_equipos import md_equipos_ui
+from md_pagos import md_pagos_ui
 
 #cargamos los elementos
 ui_colores = colores_ui()
@@ -22,6 +24,12 @@ def md_panel_ui(loginWindows, username, db_name):
     #funciones para enviar los valores
     def llamar_modulo_paquetes():
         md_paquetes_ui(db_name)
+    
+    def llamar_modulo_equipos():
+        md_equipos_ui(db_name)
+    
+    def llamar_modulo_pagos():
+        md_pagos_ui(db_name)
     
     #creamos los contenedores
     contenedor_opciones = CTkFrame(panelWindows, border_color=ui_colores["marcos"], border_width=2,
@@ -45,7 +53,8 @@ def md_panel_ui(loginWindows, username, db_name):
     btnRegistrarPago = CTkButton(contenedor_opciones, text="Pagos", image=ui_iconos["registrar-pago"],
                                 border_color=ui_colores["marcos"],
                                 border_width=2,
-                                fg_color=ui_colores["botones"])
+                                fg_color=ui_colores["botones"],
+                                command=llamar_modulo_pagos)
 
     btnCrearPaquetes = CTkButton(contenedor_opciones, text="Paquetes", image=ui_iconos["crear-paquete"],
                                 border_color=ui_colores["marcos"],
@@ -56,7 +65,8 @@ def md_panel_ui(loginWindows, username, db_name):
     btnCrearEquipos = CTkButton(contenedor_opciones, text="Equipos", image=ui_iconos["crear-equipos"],
                                 border_color=ui_colores["marcos"],
                                 border_width=2,
-                                fg_color=ui_colores["botones"])
+                                fg_color=ui_colores["botones"],
+                                command=llamar_modulo_equipos)
 
 
     #posicion de los elementos
