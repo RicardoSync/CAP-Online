@@ -339,3 +339,37 @@ def insertar_pago(nombre, clave, plan, fechaDePago, proximoPago, efectivoIngresa
     doblenet.commit()
     escobedo.close()
     messagebox.showinfo("CAP-Online", f"Se registro el pago de manera exitosa en DB {db_name}")
+
+def consultar_clientes(db_name):
+    doblenet = conexion_logica(db_name)
+
+    if not doblenet.is_connected:
+        try:
+            doblenet.reconnect()
+        except mysql.connector.Error as err:
+            messagebox.showerror("CAP-Online", f"No podemos reconectarnos con el modulo de consulta de clientes {err}")
+    
+    escobedo = doblenet.cursor()
+    sql = "SELECT clave, nombre, direccion, telefono, antena, router, paquete, ip, velocidad, fechaInstalacion, diaCorte, proximoPago, mensualidad, estado, api FROM clientes"
+    escobedo.execute(sql)
+    consulta_clientes = escobedo.fetchall()
+    escobedo.close()
+    doblenet.close()
+    return consulta_clientes
+
+def insertar_cliente(clave, nombre, direccion, telefono, antena, router, paquete, ip, velocidad, fechaInstalacion, diaCorte, proximoPago, mensualidad, estado, api, db_name):
+    doblenet = conexion_logica(db_name)
+
+    if not doblenet.is_connected:
+        try:
+            doblenet.reconnect()
+        except mysql.connector.Error as err:
+            messagebox.showerror("CAP-Online", f"No podemos reconectarnos con el modulo de insertar cliente {err}")
+    escobedo = doblenet.cursor()
+    sql = "INSERT INTO clientes (clave, nombre, direccion, telefono, antena, router, paquete, ip, velocidad, fechaInstalacion, diaCorte, proximoPago, mensualidad, estado, api) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    valores = (clave, nombre, direccion, telefono, antena, router, paquete, ip, velocidad, fechaInstalacion, diaCorte, proximoPago, mensualidad, estado, api)
+    escobedo.execute(sql, valores)
+    doblenet.commit()
+    escobedo.close()
+    doblenet.close()
+    messagebox.showinfo("CAP-Online", "Se registro de manera correcta el cliente")
